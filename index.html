@@ -1,193 +1,1539 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio professionnel d'Esther Hounsinou - Ghostwriter & Écrivaine">
-    <title>Esther Hounsinou | Ghostwriter</title>
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ghost Iris — Ghostwriter & Scénariste de l'ombre</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #09090B;
+    --bg2: #111116;
+    --bg3: #18181f;
+    --violet: #7C3AED;
+    --violet-light: #A78BFA;
+    --violet-glow: rgba(124,58,237,0.15);
+    --gold: #C9A84C;
+    --gold-light: #E8D48A;
+    --text: #F4F0FF;
+    --muted: rgba(244,240,255,0.45);
+    --border: rgba(244,240,255,0.08);
+    --border-hover: rgba(124,58,237,0.4);
+    --radius: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    border-bottom: 1px solid transparent;
+    transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+  }
+
+  nav.scrolled {
+    background: rgba(9,9,11,0.88);
+    border-color: var(--border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo span {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--violet);
+    box-shadow: 0 0 12px var(--violet);
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--violet); }
+    50% { opacity: 0.5; box-shadow: 0 0 4px var(--violet); }
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    background: var(--violet);
+    padding: 10px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .nav-cta:hover {
+    background: #6d28d9;
+    transform: translateY(-1px);
+  }
+
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .hamburger div {
+    width: 24px; height: 1.5px;
+    background: var(--text);
+    transition: all 0.3s;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-glow {
+    position: absolute;
+    top: -20%; right: -10%;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 65%);
+    pointer-events: none;
+    animation: drift 12s ease-in-out infinite alternate;
+  }
+
+  .hero-bg-glow2 {
+    position: absolute;
+    bottom: -10%; left: -5%;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%);
+    pointer-events: none;
+    animation: drift 16s ease-in-out infinite alternate-reverse;
+  }
+
+  @keyframes drift {
+    from { transform: translate(0, 0); }
+    to { transform: translate(30px, 20px); }
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--violet-light);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--violet-light);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    max-width: 860px;
+    position: relative;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--violet-light);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(14px, 1.6vw, 17px);
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 580px;
+    margin-bottom: 3rem;
+    line-height: 1.85;
+    position: relative;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #fff;
+    background: var(--violet);
+    padding: 15px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 4px 30px rgba(124,58,237,0.35);
+  }
+
+  .btn-primary:hover {
+    background: #6d28d9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(124,58,237,0.5);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    background: transparent;
+    padding: 15px 28px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--border-hover);
+    color: var(--text);
+    background: var(--violet-glow);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  .hero-scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--violet-light), transparent);
+  }
+
+  /* ── SHARED SECTION ── */
+  section {
+    position: relative;
+    padding: 6rem 3rem;
+  }
+
+  .section-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--violet-light);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-tag::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--violet-light);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--violet-light); }
+
+  .section-sub {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 4rem;
+    line-height: 1.8;
+  }
+
+  /* ── SERVICES ── */
+  #services { background: var(--bg2); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+  }
+
+  .service-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.25s;
+    cursor: default;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--violet), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .service-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+  }
+
+  .service-card:hover::before { opacity: 1; }
+
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(124,58,237,0.15);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .service-icon {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .service-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--violet-light);
+    background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(124,58,237,0.2);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+  }
+
+  .service-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-includes {
+    border-top: 1px solid var(--border);
+    padding-top: 1.2rem;
+  }
+
+  .service-includes-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(244,240,255,0.25);
+    margin-bottom: 0.8rem;
+  }
+
+  .service-includes ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .service-includes li {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .service-includes li::before {
+    content: '✦';
+    font-size: 8px;
+    color: var(--violet);
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  /* ── TARIFS ── */
+  #tarifs { background: var(--bg3); }
+
+  .tarifs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+  }
+
+  .tarif-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    transition: border-color 0.3s, transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tarif-card.featured {
+    border-color: rgba(124,58,237,0.4);
+    background: linear-gradient(135deg, rgba(124,58,237,0.06) 0%, var(--bg) 60%);
+  }
+
+  .tarif-card.featured::after {
+    content: 'Populaire';
+    position: absolute;
+    top: 1rem; right: 1rem;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--violet);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .tarif-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-3px);
+  }
+
+  .tarif-name {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+
+  .tarif-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .tarif-price span {
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: var(--muted);
+  }
+
+  .tarif-period {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .tarif-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .tarif-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 2rem;
+  }
+
+  .tarif-features li {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .tarif-features li .check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(124,58,237,0.15);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-size: 9px;
+    color: var(--violet-light);
+  }
+
+  .tarif-cta {
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 13px 20px;
+    border-radius: 7px;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .tarif-cta:hover {
+    border-color: var(--violet);
+    background: var(--violet-glow);
+  }
+
+  .tarif-card.featured .tarif-cta {
+    background: var(--violet);
+    border-color: var(--violet);
+  }
+
+  .tarif-card.featured .tarif-cta:hover {
+    background: #6d28d9;
+  }
+
+  .tarif-note {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(244,240,255,0.3);
+    text-align: center;
+    margin-top: 2rem;
+    font-style: italic;
+  }
+
+  /* ── PORTFOLIO ── */
+  #portfolio { background: var(--bg2); }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+  }
+
+  .case-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem;
+    transition: border-color 0.3s, transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .case-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--violet-light), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .case-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-3px);
+  }
+
+  .case-card:hover::before { opacity: 1; }
+
+  .case-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--violet-light);
+    margin-bottom: 1rem;
+  }
+
+  .case-domain {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .case-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 0.8rem;
+  }
+
+  .case-obj-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(244,240,255,0.25);
+    margin-bottom: 0.5rem;
+  }
+
+  .case-obj {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .case-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: rgba(167,139,250,0.7);
+    background: rgba(124,58,237,0.08);
+    border: 1px solid rgba(124,58,237,0.15);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+
+  .case-confidential {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.5rem;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(244,240,255,0.2);
+  }
+
+  .case-confidential::before {
+    content: '🔒';
+    font-size: 12px;
+  }
+
+  /* ── PROCESS ── */
+  #process { background: var(--bg); }
+
+  .process-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 5rem;
+    max-width: 1000px;
+    align-items: start;
+  }
+
+  .process-left {}
+
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .process-step {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    cursor: default;
+    transition: all 0.25s;
+  }
+
+  .process-step:last-child { border-bottom: none; }
+
+  .process-step:hover .step-content { transform: translateX(4px); }
+
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(124,58,237,0.2);
+    line-height: 1;
+    transition: color 0.25s;
+  }
+
+  .process-step:hover .step-num { color: rgba(124,58,237,0.5); }
+
+  .step-content { transition: transform 0.25s; }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .process-promise {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    position: sticky;
+    top: 7rem;
+  }
+
+  .promise-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+  }
+
+  .promise-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .promise-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--violet);
+    flex-shrink: 0;
+    margin-top: 7px;
+    box-shadow: 0 0 8px var(--violet);
+  }
+
+  .promise-text {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--bg2); }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1000px;
+    align-items: start;
+  }
+
+  .contact-left {}
+
+  .contact-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-intro em { color: var(--violet-light); font-style: normal; }
+
+  .contact-note {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .contact-action {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 16px 22px;
+    border-radius: 9px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .contact-btn:hover {
+    border-color: var(--border-hover);
+    background: var(--violet-glow);
+  }
+
+  .contact-btn.whatsapp:hover { border-color: rgba(37,211,102,0.4); background: rgba(37,211,102,0.05); }
+
+  .contact-btn-icon {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    background: var(--violet-glow);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-btn.whatsapp .contact-btn-icon { background: rgba(37,211,102,0.1); }
+
+  .contact-btn-text {}
+
+  .contact-btn-label {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .contact-btn-value {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* FORM */
+  .contact-form {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+  }
+
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 2rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .form-input,
+  .form-textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 13px 16px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder { color: rgba(244,240,255,0.2); }
+
+  .form-input:focus,
+  .form-textarea:focus {
+    border-color: rgba(124,58,237,0.5);
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+  }
+
+  .form-textarea {
+    min-height: 130px;
+    resize: vertical;
+  }
+
+  .form-submit {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: #fff;
+    background: var(--violet);
+    border: none;
+    padding: 15px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 4px 20px rgba(124,58,237,0.3);
+    margin-top: 0.5rem;
+  }
+
+  .form-submit:hover {
+    background: #6d28d9;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(124,58,237,0.45);
+  }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+    color: var(--violet-light);
+    font-size: 14px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--violet-light); }
+
+  .footer-copy {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(244,240,255,0.2);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .process-layout { grid-template-columns: 1fr; }
+    .process-promise { position: static; }
+    .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section, #hero { padding: 4.5rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+    .hero-title { font-size: 2.4rem; }
+    .tarifs-grid, .services-grid, .portfolio-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── MOBILE MENU ── */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(9,9,11,0.97);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    backdrop-filter: blur(20px);
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu a:hover { color: var(--violet-light); }
+
+  .mobile-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-size: 1.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.2s;
+  }
+
+  .mobile-close:hover { color: var(--text); }
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">Esther Hounsinou</div>
-            <ul class="nav-links">
-                <li><a href="#home">Accueil</a></li>
-                <li><a href="#about">À propos</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#projects">Projets</a></li>
-                <li><a href="#testimonials">Témoignages</a></li>
-                <li><a href="#contact" class="btn-cta">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Vos histoires, ma plume</h1>
-            <p class="hero-subtitle">Ghostwriter professionnelle spécialisée dans la création de contenu haut de gamme</p>
-            <a href="#contact" class="btn btn-primary">Commençons</a>
-        </div>
-    </section>
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#tarifs" onclick="toggleMenu()">Tarifs</a>
+  <a href="#portfolio" onclick="toggleMenu()">Portfolio</a>
+  <a href="#process" onclick="toggleMenu()">Processus</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
 
-    <!-- À Propos -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2>À propos de moi</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Bonjour, je suis Esther Hounsinou, ghostwriter et écrivaine professionnelle avec plusieurs années d'expérience dans la création de contenu exclusif.</p>
-                    <p>Je transforme vos idées en histoires captivantes, articles percutants et contenus qui marquent. Mon objectif : donner vie à votre vision sans compromis sur la qualité.</p>
-                    <ul class="skills-list">
-                        <li>✓ Romans et fiction</li>
-                        <li>✓ Articles et essais</li>
-                        <li>✓ Copywriting & marketing</li>
-                        <li>✓ Scripts et scénarios</li>
-                        <li>✓ Contenu web optimisé</li>
-                    </ul>
-                </div>
-                <div class="about-image">
-                    <div class="placeholder-image">Esther</div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <span></span>Ghost Iris
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#tarifs">Tarifs</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#process">Processus</a></li>
+    <a href="#contact" class="nav-cta">Nous Contacter</a>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+</nav>
 
-    <!-- Services -->
-    <section id="services" class="services">
-        <div class="container">
-            <h2>Mes Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>📚 Ghostwriting Littéraire</h3>
-                    <p>Création complète de romans, nouvelles et contenus créatifs. Confidentiel et professionnel.</p>
-                </div>
-                <div class="service-card">
-                    <h3>✍️ Copywriting Premium</h3>
-                    <p>Textes commerciaux, landing pages et contenus marketing qui convertissent.</p>
-                </div>
-                <div class="service-card">
-                    <h3>🎬 Scripts & Scénarios</h3>
-                    <p>Adaptation et création de scripts pour web, vidéo et cinéma.</p>
-                </div>
-                <div class="service-card">
-                    <h3>📝 Rédaction Web</h3>
-                    <p>Articles, blog posts et contenus SEO optimisés pour votre audience.</p>
-                </div>
-                <div class="service-card">
-                    <h3>🎯 Coaching en Écriture</h3>
-                    <p>Accompagnement personnalisé pour développer votre voix d'auteur.</p>
-                </div>
-                <div class="service-card">
-                    <h3>📖 Édition & Révision</h3>
-                    <p>Correction, édition et amélioration de vos textes existants.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg-glow"></div>
+  <div class="hero-bg-glow2"></div>
 
-    <!-- Projets -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2>Projets Récents</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">📖</div>
-                    <h3>Roman Jeunesse</h3>
-                    <p>Création d'un roman YA de 60,000 mots avec développement complexe des personnages.</p>
-                    <span class="project-tag">Fiction</span>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">💼</div>
-                    <h3>Campagne Marketing</h3>
-                    <p>Copywriting complet pour une marque de luxe incluant landing page et emails.</p>
-                    <span class="project-tag">Copywriting</span>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">📰</div>
-                    <h3>Série d'Articles</h3>
-                    <p>12 articles SEO optimisés pour un site d'actualités high-end.</p>
-                    <span class="project-tag">Web</span>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">🎬</div>
-                    <h3>Script Web Série</h3>
-                    <p>Création d'un script pour une web-série de 5 épisodes (thriller).</p>
-                    <span class="project-tag">Script</span>
-                </div>
-            </div>
-        </div>
-    </section>
+  <p class="hero-eyebrow reveal">Ghostwriter Stratégique &amp; Scénariste</p>
 
-    <!-- Témoignages -->
-    <section id="testimonials" class="testimonials">
-        <div class="container">
-            <h2>Témoignages de Clients</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <p>"Esther a transformé mon concept en chef-d'œuvre. Son professionnalisme et créativité sont incomparables."</p>
-                    <div class="testimonial-author">
-                        <strong>Marie D.</strong>
-                        <span>Entrepreneur</span>
-                    </div>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <div class="testimonial-card">
-                    <p>"Travail impeccable, délais respectés, et une communication fluide tout au long du projet."</p>
-                    <div class="testimonial-author">
-                        <strong>Jean L.</strong>
-                        <span>Directeur Marketing</span>
-                    </div>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                </div>
-                <div class="testimonial-card">
-                    <p>"Je recommande vivement Esther. Elle capture l'essence de ce que je voulais exprimer parfaitement."</p>
-                    <div class="testimonial-author">
-                        <strong>Sophie R.</strong>
-                        <span>Auteure</span>
-                    </div>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <h1 class="hero-title reveal reveal-delay-1">
+    Je donne une <em>voix puissante</em><br>
+    à vos idées, tout en restant<br>
+    dans l'ombre.
+  </h1>
 
-    <!-- Contact -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Parlons de Votre Projet</h2>
-            <p class="contact-subtitle">Prête à créer quelque chose de remarquable ? Contactez-moi dès aujourd'hui.</p>
-            <form class="contact-form" id="contactForm">
-                <input type="text" placeholder="Votre nom" required>
-                <input type="email" placeholder="Votre email" required>
-                <select required>
-                    <option>Sélectionnez un service</option>
-                    <option>Ghostwriting Littéraire</option>
-                    <option>Copywriting</option>
-                    <option>Scripts & Scénarios</option>
-                    <option>Rédaction Web</option>
-                    <option>Coaching en Écriture</option>
-                    <option>Édition & Révision</option>
-                </select>
-                <textarea placeholder="Décrivez votre projet..." rows="5" required></textarea>
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-            </form>
-            <div class="contact-info">
-                <p>📧 <a href="mailto:esther@example.com">esther@example.com</a></p>
-                <p>🔗 <a href="#">LinkedIn</a> | <a href="#">Twitter</a></p>
-            </div>
-        </div>
-    </section>
+  <p class="hero-subtitle reveal reveal-delay-2">
+    Ghostwriter stratégique pour dirigeants et scénariste de l'ombre pour vos projets audiovisuels. Je transforme vos pensées brutes en contenus mémorables.
+  </p>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Esther Hounsinou - Ghostwriter Professionnelle. Tous droits réservés.</p>
-        </div>
-    </footer>
+  <div class="hero-actions reveal reveal-delay-3">
+    <a href="#contact" class="btn-primary">
+      ✦ &nbsp;Parlons de votre projet
+    </a>
+    <a href="#services" class="btn-ghost">
+      Découvrir mes services →
+    </a>
+  </div>
 
-    <script src="js/script.js"></script>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <p class="section-tag reveal">Expertise</p>
+  <h2 class="section-title reveal reveal-delay-1">Mes <em>3 piliers</em> fondamentaux</h2>
+  <p class="section-sub reveal reveal-delay-2">Trois domaines où votre voix devient une arme. Chaque mission, une œuvre confidentielle.</p>
+
+  <div class="services-grid">
+
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-num">01</span>
+      <span class="service-icon">🖊</span>
+      <h3 class="service-title">Ghostwriting Digital &amp; Autorité</h3>
+      <div class="service-badge">LinkedIn · Facebook</div>
+      <p class="service-desc">
+        <strong style="color:rgba(244,240,255,0.7);font-weight:500;">Idéal pour :</strong> Entrepreneurs et professionnels qui veulent lancer et dominer leur présence en ligne — sans y passer leur temps.
+      </p>
+      <div class="service-includes">
+        <p class="service-includes-label">Ce qui est inclus</p>
+        <ul>
+          <li>Stratégie de contenu sur mesure</li>
+          <li>Personal branding & positionnement</li>
+          <li>Optimisation du profil</li>
+          <li>Posts à fort engagement écrits à votre voix</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-num">02</span>
+      <span class="service-icon">🎬</span>
+      <h3 class="service-title">Storytelling &amp; Scénarisation</h3>
+      <div class="service-badge">Fiction · Action · Arts martiaux</div>
+      <p class="service-desc">
+        <strong style="color:rgba(244,240,255,0.7);font-weight:500;">Idéal pour :</strong> Producteurs, réalisateurs et créateurs de projets audiovisuels de fiction et d'action.
+      </p>
+      <div class="service-includes">
+        <p class="service-includes-label">Ce qui est inclus</p>
+        <ul>
+          <li>Scripts complets pour le cinéma</li>
+          <li>Scènes d'action rythmées (arts martiaux)</li>
+          <li>Dialogues percutants &amp; transitions narratives</li>
+          <li>Bibles de personnages complètes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="service-card reveal reveal-delay-3">
+      <span class="service-num">03</span>
+      <span class="service-icon">✦</span>
+      <h3 class="service-title">Réécriture &amp; Polissage</h3>
+      <div class="service-badge">Re-writing · Optimisation</div>
+      <p class="service-desc">
+        <strong style="color:rgba(244,240,255,0.7);font-weight:500;">Idéal pour :</strong> Clients ayant un premier jet (discours, manuscrit, article) qui manque de fluidité ou d'impact.
+      </p>
+      <div class="service-includes">
+        <p class="service-includes-label">Ce qui est inclus</p>
+        <ul>
+          <li>Dynamisation &amp; correction du rythme</li>
+          <li>Restructuration narrative complète</li>
+          <li>Optimisation de l'impact émotionnel</li>
+          <li>Texte livré prêt à publier</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── TARIFS ── -->
+<section id="tarifs">
+  <p class="section-tag reveal">Transparence</p>
+  <h2 class="section-title reveal reveal-delay-1">Des formules <em>claires</em>,<br>pour des clients sérieux.</h2>
+  <p class="section-sub reveal reveal-delay-2">Pas de surprise, pas de négociation sans fin. Des tarifs qui reflètent la valeur de votre voix reconstituée.</p>
+
+  <div class="tarifs-grid">
+
+    <div class="tarif-card reveal reveal-delay-1">
+      <p class="tarif-name">Formule Visibilité</p>
+      <p class="tarif-price">50 000 <span>F CFA</span></p>
+      <p class="tarif-period">/ mois · LinkedIn &amp; Facebook Starter</p>
+      <div class="tarif-divider"></div>
+      <ul class="tarif-features">
+        <li><span class="check">✓</span>3 publications stratégiques / semaine</li>
+        <li><span class="check">✓</span>12 posts mensuels optimisés</li>
+        <li><span class="check">✓</span>Rédaction 100% à votre voix</li>
+        <li><span class="check">✓</span>Livraison en format prêt-à-publier</li>
+      </ul>
+      <a href="#contact" class="tarif-cta">Démarrer la visibilité</a>
+    </div>
+
+    <div class="tarif-card featured reveal reveal-delay-2">
+      <p class="tarif-name">Formule Impact &amp; Autorité</p>
+      <p class="tarif-price">75 000 <span>F CFA</span></p>
+      <p class="tarif-period">/ mois · Dirigeants &amp; ONG</p>
+      <div class="tarif-divider"></div>
+      <ul class="tarif-features">
+        <li><span class="check">✓</span>4 publications par semaine (16/mois)</li>
+        <li><span class="check">✓</span>Gestion de l'engagement &amp; messages</li>
+        <li><span class="check">✓</span>Stratégie éditoriale mensuelle</li>
+        <li><span class="check">✓</span>Positionnement de leader d'opinion</li>
+        <li><span class="check">✓</span>Rapport de performance mensuel</li>
+      </ul>
+      <a href="#contact" class="tarif-cta">Devenir une autorité</a>
+    </div>
+
+    <div class="tarif-card reveal reveal-delay-3">
+      <p class="tarif-name">Scriptwriting &amp; Création</p>
+      <p class="tarif-price" style="font-size:2.2rem;">Sur Devis</p>
+      <p class="tarif-period">À partir de 90 000 F CFA / mois · Projets sur mesure</p>
+      <div class="tarif-divider"></div>
+      <ul class="tarif-features">
+        <li><span class="check">✓</span>Scripts de films complets</li>
+        <li><span class="check">✓</span>Scénarios de séries &amp; courts métrages</li>
+        <li><span class="check">✓</span>Chansons, discours, manuscrits</li>
+        <li><span class="check">✓</span>Brief personnalisé inclus</li>
+      </ul>
+      <a href="#contact" class="tarif-cta">Demander un devis</a>
+    </div>
+
+  </div>
+
+  <p class="tarif-note reveal">✦ &nbsp; Tous les projets sont couverts par une clause de confidentialité stricte.</p>
+</section>
+
+<!-- ── PORTFOLIO ── -->
+<section id="portfolio">
+  <p class="section-tag reveal">Études de cas</p>
+  <h2 class="section-title reveal reveal-delay-1">La preuve par <em>l'action</em></h2>
+  <p class="section-sub reveal reveal-delay-2">Le secret professionnel est sacré. Ces études de cas sont anonymisées, mais les résultats, eux, sont bien réels.</p>
+
+  <div class="portfolio-grid">
+
+    <div class="case-card reveal reveal-delay-1">
+      <p class="case-num">— Étude de cas 01</p>
+      <p class="case-domain">Leadership · ONG · Réseaux sociaux</p>
+      <h3 class="case-title">Stratégie de contenu pour un leader d'ONG</h3>
+      <p class="case-obj-label">Objectif</p>
+      <p class="case-obj">Optimisation de la visibilité digitale et développement de l'engagement communautaire d'un dirigeant d'ONG en Afrique de l'Ouest. Repositionnement de voix et montée en autorité.</p>
+      <div>
+        <span class="case-tag">LinkedIn</span>
+        <span class="case-tag">Personal Branding</span>
+        <span class="case-tag">Engagement</span>
+      </div>
+      <div class="case-confidential">Identité client protégée — NDA signé</div>
+    </div>
+
+    <div class="case-card reveal reveal-delay-2">
+      <p class="case-num">— Étude de cas 02</p>
+      <p class="case-domain">Cinéma · Action · Arts Martiaux</p>
+      <h3 class="case-title">Script d'un film d'action &amp; arts martiaux</h3>
+      <p class="case-obj-label">Objectif</p>
+      <p class="case-obj">Écriture et développement complet du script d'un projet de long-métrage. Travail sur le rythme de l'intrigue, la chorégraphie des combats et des dialogues à fort impact émotionnel.</p>
+      <div>
+        <span class="case-tag">Scénario</span>
+        <span class="case-tag">Dialogues</span>
+        <span class="case-tag">Action</span>
+        <span class="case-tag">Bible perso.</span>
+      </div>
+      <div class="case-confidential">Identité client protégée — NDA signé</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section id="process">
+  <p class="section-tag reveal">Méthode</p>
+  <h2 class="section-title reveal reveal-delay-1">Comment ça <em>se passe</em> ?</h2>
+
+  <div class="process-layout">
+
+    <div class="process-steps reveal reveal-delay-2">
+      <div class="process-step">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <h3 class="step-title">Le Brief</h3>
+          <p class="step-desc">Nous échangeons sur votre univers, votre voix et vos objectifs. Je capte tout ce qui vous rend unique pour le retranscrire fidèlement.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <h3 class="step-title">L'Écriture</h3>
+          <p class="step-desc">Je rédige les premiers jets dans l'ombre. Nous ajustons selon vos retours jusqu'à obtenir un résultat qui vous ressemble parfaitement — votre voix, amplifiée.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <h3 class="step-title">La Livraison</h3>
+          <p class="step-desc">Le texte final vous appartient à 100%, sous clause de confidentialité totale. Mon nom ne figure nulle part. Votre succès vous revient entièrement.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-promise reveal reveal-delay-3">
+      <p class="promise-title">Ce que je vous garantis, à chaque mission.</p>
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <p class="promise-text"><strong style="color:var(--text);font-weight:500;">Confidentialité absolue.</strong> Clause de non-divulgation signée sur chaque projet. Votre ghostwriter restera un secret.</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <p class="promise-text"><strong style="color:var(--text);font-weight:500;">Votre voix, pas la mienne.</strong> Je m'efface derrière votre personnalité. Le résultat doit sonner comme vous, en mieux.</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <p class="promise-text"><strong style="color:var(--text);font-weight:500;">Zéro remplissage.</strong> Chaque mot est intentionnel. Pas de contenu générique — uniquement ce qui sert votre objectif.</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-dot"></div>
+        <p class="promise-text"><strong style="color:var(--text);font-weight:500;">Livraison ponctuelle.</strong> Les délais sont respectés, les révisions intégrées. Professionnel du début à la fin.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <p class="section-tag reveal">Entrer en contact</p>
+  <h2 class="section-title reveal reveal-delay-1">Votre projet mérite<br>la <em>meilleure plume.</em></h2>
+
+  <div class="contact-layout">
+
+    <div class="contact-left reveal reveal-delay-2">
+      <p class="contact-intro">
+        Prêt(e) à confier<br>votre voix à <em>Ghost Iris</em> ?
+      </p>
+      <p class="contact-note">
+        Chaque collaboration commence par une discussion. Je suis disponible par WhatsApp ou email. Pas d'engagement — juste une conversation professionnelle pour clarifier votre besoin.
+      </p>
+
+      <div class="contact-action">
+        <a href="https://wa.me/22540365527" target="_blank" class="contact-btn whatsapp">
+          <div class="contact-btn-icon">💬</div>
+          <div class="contact-btn-text">
+            <span class="contact-btn-label">Discussion directe</span>
+            <span class="contact-btn-value">+225 40 36 55 27</span>
+          </div>
+        </a>
+        <a href="mailto:hesther2022@gmail.com" class="contact-btn">
+          <div class="contact-btn-icon">📧</div>
+          <div class="contact-btn-text">
+            <span class="contact-btn-label">Email professionnel</span>
+            <span class="contact-btn-value">hesther2022@gmail.com</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form reveal reveal-delay-3">
+      <h3 class="form-title">Envoyez un message</h3>
+      <form id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="name">Nom / Prénom</label>
+          <input class="form-input" type="text" id="name" name="name" placeholder="Votre nom complet" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="votre@email.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">Votre projet</label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="Décrivez brièvement votre projet ou votre besoin..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Envoyer le message ✦</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <p style="font-size:2rem;margin-bottom:1rem;">✦</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;margin-bottom:0.5rem;">Message reçu.</p>
+        <p style="color:var(--muted);font-size:13px;">Je vous réponds dans les 24h. Merci pour votre confiance.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Ghost Iris ✍</div>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#tarifs">Tarifs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Ghost Iris — Tous droits réservés</p>
+</footer>
+
+<script>
+  /* ── NAV SCROLL ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* ── MOBILE MENU ── */
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  /* ── REVEAL ON SCROLL ── */
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  /* ── FORM SUBMIT ── */
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('contactForm');
+    const success = document.getElementById('formSuccess');
+    form.style.opacity = '0';
+    form.style.transform = 'translateY(-10px)';
+    form.style.transition = 'all 0.4s ease';
+    setTimeout(() => {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    }, 400);
+  }
+
+  /* ── SMOOTH SCROLL FOR MOBILE MENU ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
